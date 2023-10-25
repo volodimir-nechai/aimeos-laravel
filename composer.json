@@ -14,7 +14,6 @@
     "require": {
         "php": "^8.1",
         "composer-runtime-api": "^2.2",
-        "aimeos-extensions/emoji": "dev-main",
         "aimeos/aimeos-laravel": "^2023.10",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/breeze": "^1.18",
