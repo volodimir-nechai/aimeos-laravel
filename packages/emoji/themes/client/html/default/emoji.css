@@ -1,0 +1,16 @@
+.emoji-popular {
+    display: inline-block;
+}
+
+.emoji {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.emoji:hover {
+    transform: scale(1.1);
+}
+
+.productEmoji {
+    display: inline-block;
+}

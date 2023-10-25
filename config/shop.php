@@ -1,48 +1,64 @@
 <?php
 
-return [
+$routes = [];
+$prefix = config( 'app.shop_multilocale' ) ? '{locale}/' : '';
+
+if( config( 'app.shop_multishop' ) ) {
+	$routes = ['routes' => [
+		'admin' => ['prefix' => 'admin', 'middleware' => ['web']],
+		'jqadm' => ['prefix' => 'admin/{site}/jqadm', 'middleware' => ['web', 'auth', 'verified']],
+		'jsonadm' => ['prefix' => 'admin/{site}/jsonadm', 'middleware' => ['web', 'auth', 'verified']],
+		'jsonapi' => ['prefix' => '{site}/jsonapi', 'middleware' => ['web', 'api']],
+		'account' => ['prefix' => $prefix . '{site}/profile', 'middleware' => ['web', 'auth', 'verified']],
+		'default' => ['prefix' => $prefix . '{site}/shop', 'middleware' => ['web']],
+		'supplier' => ['prefix' => $prefix . '{site}/s', 'middleware' => ['web']],
+		'page' => ['prefix' => $prefix . '{site}/p', 'middleware' => ['web']],
+		'home' => ['prefix' => $prefix . '{site}', 'middleware' => ['web']],
+		'update' => ['prefix' => '{site}'],
+	] ];
+}
+
+
+return $routes + [
 
 	'apc_enabled' => false, // enable for maximum performance if APCu is available
-	'apc_prefix' => 'laravel:', // prefix for caching config and translation in APCu
+	'apc_prefix' => 'aimeos:', // prefix for caching config and translation in APCu
 	'num_formatter' => 'Locale', // locale based number formatter (alternative: "Standard")
 	'pcntl_max' => 4, // maximum number of parallel command line processes when starting jobs
 	'version' => env( 'APP_VERSION', 1 ), // shop CSS/JS file version
-	'roles' => ['admin', 'editor'], // user groups allowed to access the admin backend
-	'panel' => 'dashboard', // panel shown in admin backend after login
 
 	'routes' => [
 		// Docs: https://aimeos.org/docs/latest/laravel/extend/#custom-routes
 		// Multi-sites: https://aimeos.org/docs/latest/laravel/customize/#multiple-shops
-		// 'admin' => ['prefix' => 'admin', 'middleware' => ['web']],
-		// 'jqadm' => ['prefix' => 'admin/{site}/jqadm', 'middleware' => ['web', 'auth']],
-		// 'graphql' => ['prefix' => 'admin/{site}/graphql', 'middleware' => ['web', 'auth']],
-		// 'jsonadm' => ['prefix' => 'admin/{site}/jsonadm', 'middleware' => ['web', 'auth']],
-		// 'jsonapi' => ['prefix' => 'jsonapi', 'middleware' => ['web', 'api']],
-		// 'account' => ['prefix' => 'profile', 'middleware' => ['web', 'auth']],
-		// 'default' => ['prefix' => 'shop', 'middleware' => ['web']],
-		// 'confirm' => ['prefix' => 'shop', 'middleware' => ['web']],
-		// 'supplier' => ['prefix' => 's', 'middleware' => ['web']],
-		// 'page' => ['prefix' => 'p', 'middleware' => ['web']],
-		// 'home' => ['middleware' => ['web']],
-		// 'update' => [],
+		'admin' => ['prefix' => 'admin', 'middleware' => ['web']],
+		'jqadm' => ['prefix' => 'admin/{site}/jqadm', 'middleware' => ['web', 'auth']],
+		'jsonadm' => ['prefix' => 'admin/{site}/jsonadm', 'middleware' => ['web', 'auth']],
+		'jsonapi' => ['prefix' => 'jsonapi', 'middleware' => ['web', 'api']],
+		'account' => ['prefix' => $prefix . 'profile', 'middleware' => ['web', 'auth']],
+		'default' => ['prefix' => $prefix . 'shop', 'middleware' => ['web']],
+		'supplier' => ['prefix' => $prefix . 's', 'middleware' => ['web']],
+		'page' => ['prefix' => $prefix . 'p', 'middleware' => ['web']],
+		'home' => ['prefix' => $prefix, 'middleware' => ['web']],
+		'update' => [],
 	],
 
 	'page' => [
-		'account-index' => ['locale/select', 'basket/mini', 'catalog/tree', 'catalog/search', 'account/profile', 'account/review', 'account/subscription', 'account/basket', 'account/history', 'account/favorite', 'account/watch', 'catalog/session'],
-		'basket-index' => ['locale/select', 'catalog/tree', 'catalog/search', 'basket/standard', 'basket/bulk', 'basket/related'],
-		'catalog-count' => ['catalog/count'],
-		'catalog-detail' => ['locale/select', 'basket/mini', 'catalog/tree', 'catalog/search', 'catalog/stage', 'catalog/detail', 'catalog/session'],
-		'catalog-home' => ['locale/select', 'basket/mini', 'catalog/tree', 'catalog/search', 'catalog/home'],
-		'catalog-list' => ['locale/select', 'basket/mini', 'catalog/filter', 'catalog/tree', 'catalog/search', 'catalog/price', 'catalog/supplier', 'catalog/attribute', 'catalog/session', 'catalog/stage', 'catalog/lists'],
-		'catalog-session' => ['locale/select', 'basket/mini', 'catalog/tree', 'catalog/search', 'catalog/session'],
-		'catalog-stock' => ['catalog/stock'],
-		'catalog-suggest' => ['catalog/suggest'],
-		'catalog-tree' => ['locale/select', 'basket/mini', 'catalog/filter', 'catalog/tree', 'catalog/search', 'catalog/price', 'catalog/supplier', 'catalog/attribute', 'catalog/session', 'catalog/stage', 'catalog/lists'],
-		'checkout-confirm' => ['catalog/tree', 'catalog/search', 'checkout/confirm'],
-		'checkout-index' => ['locale/select', 'catalog/tree', 'catalog/search', 'checkout/standard'],
-		'checkout-update' => ['checkout/update'],
-		'supplier-detail' => ['locale/select', 'basket/mini', 'catalog/tree', 'catalog/search', 'supplier/detail', 'catalog/lists'],
-		'cms' => ['cms/page', 'catalog/tree', 'basket/mini'],
+		// Docs: https://aimeos.org/docs/latest/laravel/extend/#adapt-pages
+		'account-index' => [ 'locale/select', 'basket/mini','catalog/tree','catalog/search','account/profile','account/review','account/subscription','account/basket','account/history','account/favorite','account/watch','catalog/session' ],
+		'basket-index' => [ 'locale/select', 'catalog/tree','catalog/search','basket/standard','basket/bulk','basket/related' ],
+		'catalog-count' => [ 'catalog/count' ],
+		'catalog-detail' => [ 'locale/select', 'basket/mini','catalog/tree','catalog/search','catalog/stage','catalog/detail','catalog/session' ],
+		'catalog-home' => [ 'locale/select','basket/mini','catalog/tree','catalog/search','catalog/home', 'cms/page' ],
+		'catalog-list' => [ 'locale/select','basket/mini','catalog/filter','catalog/tree','catalog/search','catalog/price','catalog/supplier','catalog/attribute','catalog/session','catalog/stage','catalog/lists' ],
+		'catalog-session' => [ 'locale/select','basket/mini','catalog/tree','catalog/search','catalog/session' ],
+		'catalog-stock' => [ 'catalog/stock' ],
+		'catalog-suggest' => [ 'catalog/suggest' ],
+		'catalog-tree' => [ 'locale/select','basket/mini','catalog/filter','catalog/tree','catalog/search','catalog/price','catalog/supplier','catalog/attribute','catalog/session','catalog/stage','catalog/lists' ],
+		'checkout-confirm' => [ 'catalog/tree','catalog/search','checkout/confirm' ],
+		'checkout-index' => [ 'locale/select', 'catalog/tree','catalog/search','checkout/standard' ],
+		'checkout-update' => [ 'checkout/update' ],
+		'supplier-detail' => [ 'locale/select','basket/mini','catalog/tree','catalog/search','supplier/detail','catalog/lists'],
+		'cms' => [ 'basket/mini','catalog/tree','cms/page' ],
 	],
 
 	'resource' => [
@@ -116,7 +132,18 @@ return [
 		],
 	],
 
-	'admin' => [],
+	'admin' => [
+		'jqadm' => [
+			'api' => [
+				'openai' => [
+					'key' => env( 'SHOP_OPENAI_APIKEY' )
+				],
+				'translate' => [
+					'key' => env( 'SHOP_DEEPL_APIKEY' )
+				]
+			]
+		]
+	],
 
 	'client' => [
 		'html' => [
@@ -156,6 +183,11 @@ return [
 	],
 
 	'i18n' => [
+		'en' => [
+			'client' => [
+				'Suppliers' => ['Brands']
+			]
+		]
 	],
 
 	'madmin' => [
