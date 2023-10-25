@@ -2,8 +2,10 @@ This repository contains module to add Emoji functionality to <a href='https://g
 
 
 To install this project please clone repository to your local machine and run this command
+
 ```
-composer.phar req aimeos-extensions/emoji
+composer.phar update 
+composer req aimeos-extensions/emoji
 ```
 and then 
 ```
