@@ -13,6 +13,10 @@ composer req aimeos-extensions/emoji
 ```
 php artisan aimeos:setup --option=setup/default/demo:1 
 ```
+5. Refresh migrations
+```
+php artisan migrate:refresh --seed
+```
 5. To start project use this command
 ```
 php artisan serve
