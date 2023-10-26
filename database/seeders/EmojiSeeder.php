@@ -40,15 +40,50 @@ class EmojiSeeder extends Seeder
 
         DB::table('mshop_emoji_user_product_relations')->insert([
             [
-                'product_id' => '35',
+                'product_id' => '15',
                 'user_id'  => '1',
                 'emoji_id'  => '1',
             ],
             [
-                'product_id' => '36',
+                'product_id' => '2',
                 'user_id'  => '1',
                 'emoji_id'  => '2',
-            ]
+            ],
+            [
+                'product_id' => '15',
+                'user_id'  => '2',
+                'emoji_id'  => '2',
+            ],
+            [
+                'product_id' => '15',
+                'user_id'  => '3',
+                'emoji_id'  => '1',
+            ],
+            [
+                'product_id' => '15',
+                'user_id'  => '4',
+                'emoji_id'  => '1',
+            ],
+            [
+                'product_id' => '15',
+                'user_id'  => '5',
+                'emoji_id'  => '1',
+            ],
+            [
+                'product_id' => '15',
+                'user_id'  => '6',
+                'emoji_id'  => '3',
+            ],
+            [
+                'product_id' => '15',
+                'user_id'  => '6',
+                'emoji_id'  => '3',
+            ],
+            [
+                'product_id' => '15',
+                'user_id'  => '7',
+                'emoji_id'  => '3',
+            ],
         ]);
     }
 }

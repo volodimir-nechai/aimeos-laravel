@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Redirect;
 class EmojiController extends Controller
 {
     /**
-     * Display the registration view.
+     * Display add emoji reaction to storage.
      *
+     * @param string $product_id
+     * @param $emojiId
      * @return boolean
      */
-    public function add(string $product_id, $emojiId): bool
+    protected function add(string $product_id, int $emojiId): bool
     {
         if($userId = Auth::id()){
             $alreadyAdded = MshopEmojiUserProductRelation::where( 'user_id', $userId )->where( 'product_id', $product_id )->first();
@@ -36,7 +38,7 @@ class EmojiController extends Controller
     }
 
     /**
-     * delete all emojis for current product
+     * Delete all emojis for current product
      *
      * @return bool|\Illuminate\Http\RedirectResponse
      */
